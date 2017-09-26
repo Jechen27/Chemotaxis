@@ -1,4 +1,4 @@
-int x,y,i;
+int x,y,food;
 Bacteria [] dots;
 void setup()    
 {     
@@ -7,7 +7,8 @@ void setup()
    dots = new Bacteria[50];
    x = 150;
    y = 150;
-   for (i=1; i<dots.length; i++)
+   food = 0;
+   for (int i=1; i<dots.length; i++)
    {
     dots[i] = new Bacteria(x,y); 
    }
@@ -15,8 +16,18 @@ void setup()
 void draw()   
 {    
    background(0);
-   ellipse(mouseX,mouseY,10,10);
-   for (i=1; i<dots.length; i++)
+   fill(255);
+   if (food == 1)
+   {
+     fill(0,255,0);
+     ellipse(mouseX,mouseY,20,20);
+   }
+   if (food == -1)
+   {
+     fill(255,0,0);
+     rect(mouseX-10,mouseY-10,20,20);
+   }
+   for (int i=1; i<dots.length; i++)
    {
      dots[i].move();
      dots[i].show();
@@ -38,11 +49,19 @@ class Bacteria
     }
     void move()
     {
-      myX = myX + (int)(Math.random()*6-3);
-      myY = myY + (int)(Math.random()*6-3);
+      if (mouseX > myX) 
+      myX = myX + (int)(Math.random()*6-3+food);
+      else 
+      myX = myX + (int)(Math.random()*6-3-food);
+      if (mouseY > myY)
+      myY = myY + (int)(Math.random()*6-3+food);
+      else
+      myY = myY + (int)(Math.random()*6-3-food);
     }
 }    
 void mousePressed()
 {
-
+  food = food + 1;
+  if (food == 2)
+  food = -1;
 }
