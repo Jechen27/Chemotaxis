@@ -1,4 +1,5 @@
 int x,y,food;
+PImage leg, ghost;
 Bacteria [] dots;
 void setup()    
 {     
@@ -8,6 +9,8 @@ void setup()
    x = 150;
    y = 150;
    food = 0;
+   leg = loadImage("leg.png");
+   ghost = loadImage("ghost.png");
    for (int i=1; i<dots.length; i++)
    {
     dots[i] = new Bacteria(x,y); 
@@ -19,13 +22,19 @@ void draw()
    fill(255);
    if (food == 1)
    {
+     /*
      fill(0,255,0);
      ellipse(mouseX,mouseY,20,20);
+     */
+     image(leg,mouseX-14,mouseY-15);
    }
    if (food == -1)
    {
+     /*
      fill(255,0,0);
      rect(mouseX-10,mouseY-10,20,20);
+     */
+     image(ghost,mouseX-21,mouseY-21);
    }
    for (int i=1; i<dots.length; i++)
    {
