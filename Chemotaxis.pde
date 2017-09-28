@@ -1,4 +1,4 @@
-int x,y,food;
+int food;
 PImage leg, ghost;
 Bacteria [] dots;
 void setup()    
@@ -6,14 +6,12 @@ void setup()
    size (300,300);
    background(0);
    dots = new Bacteria[50];
-   x = 150;
-   y = 150;
    food = 0;
    leg = loadImage("leg.png");
    ghost = loadImage("ghost.png");
    for (int i=1; i<dots.length; i++)
    {
-    dots[i] = new Bacteria(x,y); 
+    dots[i] = new Bacteria(); 
    }
 }   
 void draw()   
@@ -22,18 +20,10 @@ void draw()
    fill(255);
    if (food == 1)
    {
-     /*
-     fill(0,255,0);
-     ellipse(mouseX,mouseY,20,20);
-     */
      image(leg,mouseX-14,mouseY-15);
    }
    if (food == -1)
    {
-     /*
-     fill(255,0,0);
-     rect(mouseX-10,mouseY-10,20,20);
-     */
      image(ghost,mouseX-21,mouseY-21);
    }
    for (int i=1; i<dots.length; i++)
@@ -45,16 +35,45 @@ void draw()
 class Bacteria    
 {     
     int myX,myY,myC;
-    Bacteria(int x,int y)
+    double talk;
+    Bacteria()
     {
-     myX = x;
-     myY = y;
+     myX = (int)(Math.random()*300+1);
+     myY = (int)(Math.random()*300+1);
      myC = color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
+     talk = Math.random()*0.9; 
     }
     void show()
     {
       fill(myC);
       ellipse(myX,myY,10,10);
+      if (food == 0)
+      {
+       if (talk<0.3) 
+       text("Magic is real",myX,myY);
+       else if (talk>0.6)
+       text("Nyeh",myX,myY);
+       else
+       text("I have too much free time",myX,myY);
+      }
+      if (food ==1)
+      {
+       if (talk>=0.6)
+       text("Yay",myX,myY);
+       else if (talk < 0.3)
+       text("Gimme",myX,myY);
+       else
+       text("That's mine", myX,myY);
+      }
+      if (food == -1)
+      {
+       if (talk < 0.3)
+       text("Help",myX,myY);
+       else if (talk>0.6)
+       text("Goodbye",myX,myY);
+       else
+       text("I'm ok with this",myX,myY);
+      }
     }
     void move()
     {
